@@ -597,6 +597,7 @@ def sanitize_row(fields: Dict[str, str]) -> Dict[str, str]:
 
 
 PHONE_PERMISSIVE_RE = re.compile(r"(\+?1)?\D*(\d{3})\D*(\d{3})\D*(\d{4})")
+ADDRISH_RE = re.compile(r"\d{2,} .+")
 
 
 def extract_all_phones(text: str) -> List[str]:
@@ -615,20 +616,87 @@ def extract_all_phones(text: str) -> List[str]:
     return phones
 
 
+def _is_addressish(val: str) -> bool:
+    return bool(val and ADDRISH_RE.search(val))
+
+
+def _first_person_like(lines: List[str]) -> str:
+    for line in lines:
+        parts = line.strip().split()
+        if 2 <= len(parts) <= 5 and all(re.match(r"[A-Za-z'.-]+", p) for p in parts):
+            return " ".join(parts)
+    return ""
+
+
+def _find_petitioner_near_keywords(text: str) -> str:
+    lines = text.splitlines()
+    for idx, line in enumerate(lines):
+        if re.search(r"(?i)(petitioner|administrator|name of petitioner|petitioner name|surviving spouse)", line):
+            window = lines[idx : idx + 3]
+            cand = _first_person_like(window[1:])
+            if cand:
+                return strict_clean_name(cand)
+    return ""
+
+
+REL_KEYWORDS = [
+    ("surviving spouse", "Spouse"),
+    ("spouse", "Spouse"),
+    ("wife", "Spouse"),
+    ("husband", "Spouse"),
+    ("son", "Son"),
+    ("daughter", "Daughter"),
+    ("child", "Child"),
+    ("brother", "Brother"),
+    ("sister", "Sister"),
+    ("father", "Father"),
+    ("mother", "Mother"),
+]
+
+
+def _detect_relationship(text: str) -> str:
+    low = text.lower()
+    for kw, rel in REL_KEYWORDS:
+        if kw in low:
+            return rel
+    return ""
+
+
 def validate_and_fix_row(fields: Dict[str, str], full_text: str, pages_text: List[str], debug=None) -> Tuple[Dict[str, str], Dict[str, bool]]:
-    autofix = {"petitioner_name_filled": False, "petitioner_unknown": False, "phone_filled": False}
+    autofix = {"petitioner_name_filled": False, "petitioner_unknown": False, "phone_filled": False, "relationship_set": False}
     petitioner = fields.get("Petitioner Name", "") or ""
     relationship = (fields.get("Relationship", "") or "").lower()
     decedent = fields.get("Deceased Name", "") or ""
 
+    # Relationship detection if missing
+    if not relationship:
+        detected = _detect_relationship(full_text)
+        if detected:
+            fields["Relationship"] = detected
+            relationship = detected.lower()
+            autofix["relationship_set"] = True
+        else:
+            fields["Relationship"] = "Unknown"
+            relationship = "unknown"
+            autofix["relationship_set"] = True
+            if debug is not None:
+                debug.setdefault("_warnings", []).append("AUTOSET:Relationship Unknown")
+
     if not petitioner:
+        # Spouse-specific search
         if relationship == "spouse":
-            candidate = _fallback_petitioner_from_blocks(full_text)
+            candidate = _fallback_petitioner_from_blocks(full_text) or _find_petitioner_near_keywords(full_text)
+            if candidate and candidate.lower() != decedent.lower():
+                fields["Petitioner Name"] = candidate
+                autofix["petitioner_name_filled"] = True
+        # Child/son/daughter or generic petitioner search
+        if not fields.get("Petitioner Name") and relationship in {"child", "son", "daughter"}:
+            candidate = _find_petitioner_near_keywords(full_text)
             if candidate and candidate.lower() != decedent.lower():
                 fields["Petitioner Name"] = candidate
                 autofix["petitioner_name_filled"] = True
         if not fields.get("Petitioner Name"):
-            candidate = _fallback_petitioner_from_blocks(full_text)
+            candidate = _find_petitioner_near_keywords(full_text) or _fallback_petitioner_from_blocks(full_text)
             if candidate and candidate.lower() != decedent.lower():
                 fields["Petitioner Name"] = candidate
                 autofix["petitioner_name_filled"] = True
@@ -646,6 +714,19 @@ def validate_and_fix_row(fields: Dict[str, str], full_text: str, pages_text: Lis
             if candidate and candidate.lower() != decedent.lower():
                 fields["Petitioner Name"] = candidate
                 autofix["petitioner_name_filled"] = True
+
+    # If petitioner looks like an address, clear and retry
+    if _is_addressish(fields.get("Petitioner Name", "")):
+        fields["Petitioner Name"] = ""
+        candidate = _find_petitioner_near_keywords(full_text)
+        if candidate:
+            fields["Petitioner Name"] = candidate
+            autofix["petitioner_name_filled"] = True
+        else:
+            fields["Petitioner Name"] = "UNKNOWN"
+            autofix["petitioner_unknown"] = True
+            if debug is not None:
+                debug.setdefault("_warnings", []).append("AUTOSET:Petitioner Name UNKNOWN (address detected)")
 
     # Phone recovery when attorney exists
     if fields.get("Attorney") and not fields.get("Phone Number"):
