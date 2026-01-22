@@ -9,7 +9,7 @@ from typing import Callable, Dict, List, Optional
 import csv
 import pytesseract
 
-from extractor import Columns, parse_fields, normalize_row, sanitize_row
+from extractor import Columns, parse_fields, normalize_row, sanitize_row, validate_and_fix_row
 from ocr_utils import ExtractionCancelled, extract_pdf_text, get_last_extraction_info
 from form_detector import FormType
 from diagnostics import log_environment
@@ -79,13 +79,18 @@ def process_pdf(pdf_path: str, min_text_length: int, ocr_dpi: int, cancel_event=
         fields, missing, detection = parse_fields(seg_text, pages_text=seg, debug=debug_data, form_hint=form_hint)
         # Final normalization layer for EXE/script parity
         fields = normalize_row(fields, seg_text, pdf_filename, debug_data)
-        # Final sanitize guard before CSV write
+        # Final sanitize guard before validation
+        fields = sanitize_row(fields)
+        # Validate and auto-fix critical fields
+        fields, autofix = validate_and_fix_row(fields, seg_text, seg, debug_data)
+        # Re-sanitize after fixes
         fields = sanitize_row(fields)
         missing = [col for col in Columns if not fields.get(col)]
         if debug_data is not None:
             debug_data["_final_normalized"] = fields
             debug_data["_missing_normalized"] = missing
         record_meta: Dict[str, Dict[str, Optional[str]]] = {}
+        autofix_info = autofix if "autofix" in locals() else {}
         field_sources: Dict[str, str] = {}
         for key, candidates in debug_data.items():
             if key.startswith("_") or not isinstance(candidates, list):
@@ -140,6 +145,7 @@ def process_pdf(pdf_path: str, min_text_length: int, ocr_dpi: int, cancel_event=
                 "detection": detection.to_dict(),
                 "case_id": idx + 1,
                 "field_sources": field_sources,
+                "autofix": autofix_info,
                 "debug": debug_data,
                 "record_meta": record_meta,
                 "form_type": form_type_label,
@@ -183,6 +189,7 @@ def run_batch(
 ):
     sheet_cfg = sheet_cfg or {}
     settings = settings or {}
+    os.environ.setdefault("PYTHONUTF8", "1")
 
     pdf_pattern = "**/*.pdf" if settings.get("recursive") else "*.pdf"
     pdf_paths = sorted(glob.glob(os.path.join(pdf_dir, pdf_pattern), recursive=settings.get("recursive", False)))
@@ -289,6 +296,7 @@ def run_batch(
                     "error": "",
                     "pages_used": len(result.get("pages_text", [])),
                     "field_sources": result.get("field_sources", {}),
+                    "autofix": result.get("autofix", {}),
                 }
                 detection = result.get("detection", {}) or {}
                 log_entry["form_type"] = detection.get("form_type", "UNKNOWN")

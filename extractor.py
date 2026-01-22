@@ -596,6 +596,78 @@ def sanitize_row(fields: Dict[str, str]) -> Dict[str, str]:
     return sanitized
 
 
+PHONE_PERMISSIVE_RE = re.compile(r"(\+?1)?\D*(\d{3})\D*(\d{3})\D*(\d{4})")
+
+
+def extract_all_phones(text: str) -> List[str]:
+    phones = []
+    norm = text.replace("O", "0").replace("o", "0")
+    for m in PHONE_PERMISSIVE_RE.finditer(norm):
+        g2, g3, g4 = m.group(2), m.group(3), m.group(4)
+        if not (g2 and g3 and g4):
+            continue
+        digits = f"{g2}{g3}{g4}"
+        if len(digits) != 10:
+            continue
+        phone = f"{g2}-{g3}-{g4}"
+        if phone not in phones:
+            phones.append(phone)
+    return phones
+
+
+def validate_and_fix_row(fields: Dict[str, str], full_text: str, pages_text: List[str], debug=None) -> Tuple[Dict[str, str], Dict[str, bool]]:
+    autofix = {"petitioner_name_filled": False, "petitioner_unknown": False, "phone_filled": False}
+    petitioner = fields.get("Petitioner Name", "") or ""
+    relationship = (fields.get("Relationship", "") or "").lower()
+    decedent = fields.get("Deceased Name", "") or ""
+
+    if not petitioner:
+        if relationship == "spouse":
+            candidate = _fallback_petitioner_from_blocks(full_text)
+            if candidate and candidate.lower() != decedent.lower():
+                fields["Petitioner Name"] = candidate
+                autofix["petitioner_name_filled"] = True
+        if not fields.get("Petitioner Name"):
+            candidate = _fallback_petitioner_from_blocks(full_text)
+            if candidate and candidate.lower() != decedent.lower():
+                fields["Petitioner Name"] = candidate
+                autofix["petitioner_name_filled"] = True
+        if not fields.get("Petitioner Name"):
+            fields["Petitioner Name"] = "UNKNOWN"
+            autofix["petitioner_unknown"] = True
+            if debug is not None:
+                debug.setdefault("_warnings", []).append("AUTOSET:Petitioner Name UNKNOWN")
+
+    # If spouse relationship but petitioner equals decedent or blank, attempt spouse-specific grab
+    if relationship == "spouse":
+        pet = fields.get("Petitioner Name", "")
+        if not pet or (decedent and pet.lower() == decedent.lower()):
+            candidate = _fallback_petitioner_from_blocks(full_text)
+            if candidate and candidate.lower() != decedent.lower():
+                fields["Petitioner Name"] = candidate
+                autofix["petitioner_name_filled"] = True
+
+    # Phone recovery when attorney exists
+    if fields.get("Attorney") and not fields.get("Phone Number"):
+        att = fields["Attorney"]
+        # First, near attorney
+        phone = _phone_near_attorney(full_text, att)
+        if not phone:
+            tail_text = "\n".join(pages_text[-2:]) if pages_text else full_text
+            phones = extract_all_phones(tail_text)
+            phone = phones[0] if phones else ""
+        if not phone:
+            phones = extract_all_phones(full_text)
+            phone = phones[0] if phones else ""
+        if phone:
+            fields["Phone Number"] = phone
+            autofix["phone_filled"] = True
+            if debug is not None:
+                debug.setdefault("_warnings", []).append(f"AUTOSET:Phone Number {phone}")
+
+    return fields, autofix
+
+
 def _clean_output_value(val: str) -> str:
     if val is None:
         return ""
