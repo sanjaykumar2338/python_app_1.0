@@ -64,7 +64,10 @@ def normalize_email(val: str, extra_scopes: Optional[List[str]] = None) -> str:
     cleaned = re.sub(r"\s+\.", ".", cleaned)
 
     def _find_candidates(text: str) -> List[str]:
-        return [m.group(0).lower().rstrip(".") for m in re.finditer(r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}", text, flags=re.IGNORECASE)]
+        return [
+            m.group(0).lower().rstrip(".")
+            for m in re.finditer(r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}", text, flags=re.IGNORECASE)
+        ]
 
     candidates = _find_candidates(cleaned)
     if not candidates and extra_scopes:
@@ -457,7 +460,10 @@ def clean_record(rec: Dict[str, str], pages_text: Optional[List[str]] = None) ->
     return out
 
 
-EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", re.IGNORECASE)
+EMAIL_RE = re.compile(
+    r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b",
+    re.IGNORECASE,
+)
 PHONE_RE = re.compile(r"(\+?1)?\D*(\d{3})\D*(\d{3})\D*(\d{4})")
 CONTROL_RE = re.compile(r"[\x00-\x1F\x7F]")
 ZERO_WIDTH_RE = re.compile(r"[\u200B-\u200D\uFEFF]")
@@ -469,6 +475,12 @@ def extract_first_email(text: str) -> str:
     for m in EMAIL_RE.finditer(text):
         cand = m.group(0).strip(".,;:)]}")
         cand = cand.lower()
+        # hard-trim OCR garbage after common TLDs
+        for tld in (".com", ".net", ".org", ".edu", ".gov", ".us"):
+            idx = cand.find(tld)
+            if idx != -1:
+                cand = cand[: idx + len(tld)]
+                break
         if " " in cand:
             continue
         if len(cand) > 80:
@@ -502,15 +514,21 @@ def _fallback_petitioner_from_blocks(text: str) -> str:
     # Petitioner Information block
     block = re.search(r"(?is)petitioner information(.{0,400})", text)
     if block:
-        m = re.search(r"(?i)name[:\s]+([A-Z .,'-]{3,})", block.group(1))
+        m = re.search(r"(?i)name[:\s]+([A-Za-z .,'-]{3,})", block.group(1))
         if m:
-            return strict_clean_name(m.group(1))
-    m = re.search(r"(?i)letters\s+(testamentary|of administration)\s+to[:\s]+([A-Z .,'-]{3,})", text)
+            name = m.group(1).strip()
+            name = re.split(r"[\r\n]{1,}| {2,}", name)[0].strip(" ,;-")
+            return strict_clean_name(name)
+    m = re.search(r"(?i)letters\s+(testamentary|of administration)\s+to[:\s]+([A-Za-z .,'-]{3,})", text)
     if m:
-        return strict_clean_name(m.group(2))
-    sig = re.search(r"(?is)signature of petitioner.*?print name[:\s]*([A-Z .,'-]{3,})", text)
+        name = m.group(2).strip()
+        name = re.split(r"[\r\n]{1,}| {2,}", name)[0].strip(" ,;-")
+        return strict_clean_name(name)
+    sig = re.search(r"(?is)signature of petitioner.*?print name[:\s]*([A-Za-z .,'-]{3,})", text)
     if sig:
-        return strict_clean_name(sig.group(1))
+        name = sig.group(1).strip()
+        name = re.split(r"[\r\n]{1,}| {2,}", name)[0].strip(" ,;-")
+        return strict_clean_name(name)
     return ""
 
 

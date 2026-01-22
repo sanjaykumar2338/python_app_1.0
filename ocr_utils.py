@@ -94,7 +94,16 @@ def extract_pdf_text(
     }
     if os.getenv("DEBUG_EXTRACT") == "1":
         print(f"[EXTRACT_INFO] {_last_info}")
-    return "\n".join(texts), method, texts
+    full_text = "\n".join(texts)
+    # Optional raw dump for parity debugging
+    dump_raw = os.getenv("DUMP_RAW_TEXT") == "1"
+    if dump_raw:
+        base = os.path.splitext(os.path.basename(pdf_path))[0]
+        dbg_dir = os.path.join("debug_text")
+        os.makedirs(dbg_dir, exist_ok=True)
+        with open(os.path.join(dbg_dir, f"{base}.txt"), "w", encoding="utf-8") as f:
+            f.write(full_text)
+    return full_text, method, texts
 
 
 def get_last_extraction_info() -> dict:
