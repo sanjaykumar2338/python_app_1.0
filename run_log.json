@@ -2,22 +2,22 @@
   {
     "type": "environment",
     "runtime": {
-      "python_version": "3.10.19",
-      "platform": "macOS-26.2-arm64-arm-64bit",
+      "python_version": "3.11.5",
+      "platform": "Windows-10-10.0.26200-SP0",
       "exe_mode": "script",
-      "cwd": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app",
+      "cwd": "C:\\xampp\\htdocs\\myworkplace\\fiverr\\python_app_1.0",
       "fs_encoding": "utf-8",
-      "preferred_encoding": "UTF-8"
+      "preferred_encoding": "cp1252"
     },
     "deps": {
       "fitz": "1.26.7",
       "pytesseract": "0.3.13",
-      "PIL": "10.1.0",
+      "PIL": "10.4.0",
       "pdfplumber": "missing"
     },
     "external": {
       "tesseract": {
-        "path": "/opt/homebrew/bin/tesseract",
+        "path": "C:\\Program Files\\Tesseract-OCR\\tesseract.EXE",
         "exists": true
       },
       "poppler": {
@@ -35,7 +35,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 4
+      "pages": 4,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
@@ -63,6 +64,12 @@
       "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
       "Relationship": "table_petitioner_pg2",
       "Property Value": "improved_real_property"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -74,7 +81,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
@@ -103,6 +111,12 @@
       "Deceased Property Address": "street_match_fallback",
       "Relationship": "generic_fallback",
       "Property Value": "personal_property"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -114,7 +128,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
@@ -127,20 +142,26 @@
       "domicile",
       "improved real property"
     ],
-    "missing_fields": [],
+    "missing_fields": [
+      "Phone Number"
+    ],
     "error": "",
     "pages_used": 6,
     "field_sources": {
       "attorney_name_candidates": "page6_block",
       "Attorney": "attorney_block_pg6",
-      "attorney_phone_candidates": "page6_block",
-      "Phone Number": "attorney_block_pg6",
       "Deceased Name": "will_of_header_strict",
       "Petitioner Name": "petitioner_info_block",
       "Petitioner Address": "domicile_last_page",
       "Deceased Property Address": "anchored_block",
       "Relationship": "table_petitioner_pg3",
       "Property Value": "context_scored"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -152,7 +173,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 7
+      "pages": 7,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
@@ -181,6 +203,12 @@
       "Deceased Property Address": "anchored_block",
       "Relationship": "generic_fallback",
       "Property Value": "fallback_rescan"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -192,7 +220,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
@@ -220,6 +249,12 @@
       "Deceased Property Address": "decedent_block_pg1_nozip",
       "Relationship": "table_petitioner_pg4",
       "Property Value": "personal_property"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -231,7 +266,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 5
+      "pages": 5,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
@@ -255,10 +291,16 @@
       "attorney_name_candidates": "page5_block",
       "Deceased Name": "will_of_pg1",
       "Petitioner Name": "petitioner_section_pg1",
-      "Petitioner Address": "paragraph1_block",
+      "Petitioner Address": "domicile_block_pg1_lines",
       "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
       "Relationship": "table_petitioner_pg2",
       "Property Value": "context_scored"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -270,7 +312,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 4
+      "pages": 4,
+      "text_len": 0
     },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
@@ -291,6 +334,12 @@
       "Deceased Property Address": "decedent_info_lines",
       "Petitioner Address": "petitioner_domicile_block",
       "Property Value": "context_scored"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -302,7 +351,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 5
+      "pages": 5,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
@@ -330,6 +380,12 @@
       "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
       "Relationship": "distributee_class_child",
       "Property Value": "personal_property"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -341,7 +397,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
@@ -369,6 +426,12 @@
       "Deceased Property Address": "domicile_section_pg2",
       "Relationship": "table_petitioner_pg3",
       "Property Value": "fallback_rescan"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -380,7 +443,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 5
+      "pages": 5,
+      "text_len": 0
     },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
@@ -402,6 +466,12 @@
       "Property Value": "personal_real_property",
       "Attorney": "esq_line_last_page",
       "Phone Number": "last_page_phone"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -413,7 +483,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 5
+      "pages": 5,
+      "text_len": 0
     },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
@@ -435,6 +506,12 @@
       "Property Value": "personal_real_property",
       "Attorney": "esq_line_last_page",
       "Phone Number": "last_page_phone"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -446,7 +523,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
@@ -467,6 +545,12 @@
       "Attorney": "print_name_of_attorney",
       "Phone Number": "last_page_phone",
       "Email Address": "last_page_email"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   },
   {
@@ -478,7 +562,8 @@
       "extraction_mode": "OCR_FALLBACK",
       "render_dpi": 300,
       "renderer": "pymupdf PyMuP",
-      "pages": 6
+      "pages": 6,
+      "text_len": 0
     },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
@@ -507,6 +592,12 @@
       "Deceased Property Address": "domicile_section_pg2",
       "Relationship": "distributee_class_child",
       "Property Value": "improved_real_property"
+    },
+    "autofix": {
+      "petitioner_name_filled": false,
+      "petitioner_unknown": false,
+      "phone_filled": false,
+      "relationship_set": false
     }
   }
 ]

@@ -7,7 +7,7 @@ mentioned above.
 9. (a) To the best of the knowledge of the undersigned, the approximate total value of all property
 constituting the decedent’s gross testamentary estate is:
 
-Nee eee — — — — —
+ee _ _ e—Eeeeee eee — —
 
 Greater than $ 0.00
 But less than $ 10,000.00
@@ -17,7 +17,7 @@ Unimproved Real Property in New York State $ 0.00
 Estimated Gross Rents for a Period of 18 Months $ 0.00
 
 (b) No other testamentary assets exist in New York State, nor does any cause of action exist on behalf
-of the estate, except as follows: [-] None
+of the estate, except as follows: [] None
 
 A cause of action exists for the decedent’s conscious pain and suffering and wrongful death against the
 manufacturer of CPAP, BiPAP, and/or mechanical ventilator devices.
@@ -35,9 +35,9 @@ letters issue thereon as follows:
 
 Letters Testamentary to: Lillie Ann Scott
 
-i
+a
 
-[_] Letters of Trusteeship to:
+(_] Letters of Trusteeship to:
 
 f/b/o
 
@@ -47,7 +47,7 @@ f/b/o
 
 f/b/o
 
-nnn Eee
+nn ee
 
 f/b/o
 

@@ -11,7 +11,7 @@ Staten Island New York 10314 United States
 
 Mailing Address: Street and Number (/f different from domicile)
 
-City, Village or Town eT ZIP Code Country
+City, Village or Town = ZIP Code Country
 
 Relationship
 Spouse
@@ -19,7 +19,7 @@ Description of Legacy, Devise or Other Interest
 
 Full Residuary Legatee
 
-Nature of Fiduciary Status (if applicable)
+Nature of Fiduciary Status (/f applicable)
 
 Nominated Executor
 
@@ -31,13 +31,13 @@ Domicile Address: Street and Number
 
 16 Ada Drive
 
-City, Village or Town Sate ork __[rosta__|Unite
+City, Village or Town Sate ork _[rosta__|Unitet
 
 Staten Island New York 10314 United States
 
 Mailing Address: Street and Number (if different from domicile)
 
-City, Village or Town = LU Code Country
+City, Village or Town = Clr Code Country
 
 Relationship
 Son
@@ -45,7 +45,7 @@ Description of Legacy, Devise or Other Interest
 
 Specific Legatee
 
-Nature of Fiduciary Status (if applicable)
+Nature of Fiduciary Status (/f applicable)
 Nominated Successor Co-Executor
 Name
 
@@ -55,8 +55,8 @@ Domicile Address: Street and Number
 
 15 Saint Joseph Place
 City, Village or Town State ZIP Code Country
-New Windsor New York 12553 United States
 
+New Windsor New York 12553 United States
 Mailing Address: Street and Number (if different from domicile)
 
 City, Village or Town ZIP Code

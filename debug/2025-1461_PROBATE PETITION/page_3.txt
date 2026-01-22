@@ -9,7 +9,7 @@ Domicile Address: Street and Number
 
 105 Cannon Avenue
 
-City, Village or Town State Zip Code Country
+City, Viitage or Town State Zip Code Country
 
 Staten Island United States
 
@@ -25,13 +25,13 @@ Name Relationship
 
 Michael Curry Son
 
-Domicile Address; Street and Number
+Domicile Address: Street and Number
 
 3967 E Schroon River Road
 
 City, Village or Town State Zip Code Country
 
-Pottersville [Rew york apeeo | United States
+Pottersville [Rew york asco | United States
 ’ Description of Legacy, Devise or Other Interest
 
 Beneficiary of inter vivos trust designated in Will para 3

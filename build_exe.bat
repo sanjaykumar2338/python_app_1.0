@@ -1,10 +1,15 @@
 @echo off
-REM Build Windows EXE with PyInstaller (bundles all Python libs)
+REM Build Windows EXE with PyInstaller (one-folder bundle: EXE + support files)
 REM Activate your venv before running this script.
 
-set PYI=pyinstaller
+where pyinstaller >nul 2>nul
+if %errorlevel%==0 (
+  set PYI=pyinstaller
+) else (
+  set PYI=py -m PyInstaller
+)
 
-%PYI% --noconfirm --onefile --windowed ^
+%PYI% --noconfirm --onedir --windowed ^
   --name "ProbatePDFExtractor" ^
   --hidden-import pytesseract.pytesseract ^
   --hidden-import google.oauth2.service_account ^

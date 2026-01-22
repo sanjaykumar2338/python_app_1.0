@@ -25,8 +25,8 @@ FERN CURRY
 
 aka
 
-EO rt ey,
-Oe a Eel
+EE ret ey,
+ee eee Eel
 
 FERN ANNETTE CURRY
 
@@ -50,7 +50,7 @@ City, Village or Town State Zip Code Country
 Staten Island United States
 interest: (Check One)
 
-[X] Executor named in decedent’s Will [ ] Other:
+[X] Executor named in decedent’s Will [_] Other:
 
 1.(b} The proposed Executor [ ] is [X] is not an attorney.
 [NOTE: A sole Executor-Attorney must comply with 22 NYCRR 207. 16(e)]

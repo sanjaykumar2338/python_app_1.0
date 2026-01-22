@@ -90,7 +90,7 @@ Flags:
   - Progress bar, counts (processed/success/failed/OCR), live log, Stop button, and “Open output folder”.
   - Writes `output.csv` and `run_log.json` to the chosen output folder. If Google write isn’t available (most public sheets are read-only), it clearly falls back to CSV-only.
 
-### Windows release packaging (one-file EXE)
+### Windows release packaging (one-folder EXE + support files)
 1) On Windows, install dependencies:  
    ```bash
    python -m venv .venv
@@ -98,6 +98,6 @@ Flags:
    pip install -r requirements.txt
    pip install pyinstaller
    ```
-2) Build: `build_exe.bat` (creates `dist\ProbatePDFExtractor.exe` with bundled Python libs).  
-3) Ship the EXE plus a README and ask the client to provide a service_account.json and share their sheet with that service account.
-4) OCR: The EXE assumes Tesseract is installed/available on PATH. Optional portable OCR: bundle a portable tesseract executable alongside the EXE and set an environment variable before launch, e.g. `set TESSERACT_CMD=C:\path\to\portable\tesseract.exe`. No UI toggle is needed; OCR runs automatically.
+2) Build: `build_exe.bat` (creates `dist\ProbatePDFExtractor\` containing the EXE plus support files).  
+3) Ship the entire `dist\ProbatePDFExtractor\` folder (optionally include a README) and ask the client to provide a service_account.json and share their sheet with that service account.
+4) OCR: The EXE assumes Tesseract is installed/available on PATH. Optional portable OCR: bundle a portable tesseract executable alongside the EXE folder and set an environment variable before launch, e.g. `set TESSERACT_CMD=C:\path\to\portable\tesseract.exe`. No UI toggle is needed; OCR runs automatically.

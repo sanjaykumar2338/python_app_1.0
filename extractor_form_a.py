@@ -352,10 +352,38 @@ def find_block_after_label(text: str, label: str, max_lines: int = 10) -> List[s
 
 
 def extract_name_after_label(block: List[str], label: str = "Name") -> str:
+    skip_patterns = [
+        r"\bcitizenship\b",
+        r"\bdomicile\b",
+        r"\bprincipal office\b",
+        r"\baddress\b",
+        r"\bmailing address\b",
+        r"\bcity\b",
+        r"\bvillage\b",
+        r"\btown\b",
+        r"\bstate\b",
+        r"\bzip\b",
+        r"\bcountry\b",
+    ]
     for idx, line in enumerate(block):
-        if label.lower() in line.lower() and idx + 1 < len(block):
-            return block[idx + 1]
+        if label.lower() in line.lower():
+            for j in range(idx + 1, min(len(block), idx + 6)):
+                candidate = block[j].strip()
+                if not candidate:
+                    continue
+                lower = candidate.lower()
+                if any(re.search(pat, lower) for pat in skip_patterns):
+                    continue
+                if _clean_name(candidate):
+                    return candidate
+            for j in range(idx + 1, len(block)):
+                if block[j].strip():
+                    return block[j].strip()
+            break
     if block:
+        for line in block:
+            if _clean_name(line):
+                return line
         return block[0]
     return ""
 

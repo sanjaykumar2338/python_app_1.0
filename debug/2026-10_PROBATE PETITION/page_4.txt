@@ -6,7 +6,7 @@ Domicile Address: Street and Number
 
 City, Village or Town se Code Country
 
-Mailing Address: Street and Number (if different from domicile)
+Mailing Address: Street and Number (If different from domicile)
 
 City, Village or Town ZIP Code Country
 
