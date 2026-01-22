@@ -1,0 +1,419 @@
+[
+  {
+    "type": "environment",
+    "runtime": {
+      "python_version": "3.10.19",
+      "platform": "macOS-26.2-arm64-arm-64bit",
+      "exe_mode": "script",
+      "cwd": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app"
+    },
+    "deps": {
+      "fitz": "1.26.7",
+      "pytesseract": "0.3.13",
+      "PIL": "10.1.0",
+      "pdfplumber": "missing"
+    },
+    "external": {
+      "tesseract": {
+        "path": "/opt/homebrew/bin/tesseract",
+        "exists": true
+      },
+      "poppler": {
+        "path": "",
+        "exists": false
+      }
+    }
+  },
+  {
+    "file": "2025-1166___PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.588,
+    "matched_markers": [
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [
+      "Attorney",
+      "Phone Number",
+      "Email Address"
+    ],
+    "error": "",
+    "pages_used": 4,
+    "field_sources": {
+      "Attorney": "attorney_block_pg4",
+      "attorney_name_candidates": "page4_block",
+      "Deceased Name": "will_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "paragraph1_block",
+      "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
+      "Relationship": "table_petitioner_pg2",
+      "Property Value": "improved_real_property"
+    }
+  },
+  {
+    "file": "2025-1461_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.706,
+    "matched_markers": [
+      "surrogate's court",
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "attorney_name_candidates": "page6_block",
+      "attorney_phone_candidates": "page6_block",
+      "Phone Number": "attorney_block_pg6",
+      "attorney_email_candidates": "page6_block",
+      "Email Address": "attorney_block_pg6",
+      "Attorney": "notary_block_inferred",
+      "Deceased Name": "will_of_header_strict",
+      "Petitioner Name": "petitioner_info_block",
+      "Petitioner Address": "domicile_last_page",
+      "Deceased Property Address": "street_match_fallback",
+      "Relationship": "generic_fallback",
+      "Property Value": "personal_property"
+    }
+  },
+  {
+    "file": "2025-1463_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.706,
+    "matched_markers": [
+      "surrogate's court",
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "attorney_name_candidates": "page6_block",
+      "Attorney": "attorney_block_pg6",
+      "attorney_phone_candidates": "page6_block",
+      "Phone Number": "attorney_block_pg6",
+      "Deceased Name": "will_of_header_strict",
+      "Petitioner Name": "petitioner_info_block",
+      "Petitioner Address": "domicile_last_page",
+      "Deceased Property Address": "anchored_block",
+      "Relationship": "table_petitioner_pg3",
+      "Property Value": "context_scored"
+    }
+  },
+  {
+    "file": "2026-10_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.706,
+    "matched_markers": [
+      "surrogate's court",
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 7,
+    "field_sources": {
+      "attorney_name_candidates": "page7_block",
+      "attorney_phone_candidates": "page7_block",
+      "Phone Number": "attorney_block_pg7",
+      "attorney_email_candidates": "page7_block",
+      "Email Address": "attorney_block_pg7",
+      "Attorney": "attorney_block_pg7",
+      "Deceased Name": "will_of_header_strict",
+      "Petitioner Name": "petitioner_info_block",
+      "Petitioner Address": "anchored_block",
+      "Deceased Property Address": "anchored_block",
+      "Relationship": "generic_fallback",
+      "Property Value": "fallback_rescan"
+    }
+  },
+  {
+    "file": "2026-11_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.588,
+    "matched_markers": [
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "attorney_phone_candidates": "page6_block",
+      "Phone Number": "attorney_block_pg6",
+      "attorney_email_candidates": "page6_block",
+      "Email Address": "attorney_block_pg6",
+      "Attorney": "attorney_block_pg6",
+      "attorney_name_candidates": "page6_block",
+      "Deceased Name": "will_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "paragraph1_block",
+      "Deceased Property Address": "decedent_block_pg1_nozip",
+      "Relationship": "table_petitioner_pg4",
+      "Property Value": "personal_property"
+    }
+  },
+  {
+    "file": "2026-13_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.588,
+    "matched_markers": [
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 5,
+    "field_sources": {
+      "attorney_phone_candidates": "page5_block",
+      "Phone Number": "attorney_block_pg5",
+      "attorney_email_candidates": "page5_block",
+      "Email Address": "attorney_block_pg5",
+      "Attorney": "attorney_block_pg5",
+      "attorney_name_candidates": "page5_block",
+      "Deceased Name": "will_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "paragraph1_block",
+      "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
+      "Relationship": "table_petitioner_pg2",
+      "Property Value": "context_scored"
+    }
+  },
+  {
+    "file": "2026-14_ADMINISTRATION PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_ADMIN",
+    "confidence_score": 1.0,
+    "matched_markers": [
+      "petition for letters of",
+      "administration proceeding"
+    ],
+    "missing_fields": [
+      "Attorney",
+      "Email Address"
+    ],
+    "error": "",
+    "pages_used": 4,
+    "field_sources": {
+      "Deceased Name": "section2_name",
+      "Petitioner Name": "petitioner_scope_pg1",
+      "Relationship": "petitioner_interest_pg1",
+      "Deceased Property Address": "decedent_info_lines",
+      "Petitioner Address": "petitioner_domicile_block",
+      "Property Value": "context_scored"
+    }
+  },
+  {
+    "file": "2026-16_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.588,
+    "matched_markers": [
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 5,
+    "field_sources": {
+      "attorney_phone_candidates": "page5_block",
+      "Phone Number": "attorney_block_pg5",
+      "attorney_email_candidates": "page5_block",
+      "Email Address": "attorney_block_pg5",
+      "Attorney": "attorney_block_pg5",
+      "attorney_name_candidates": "page5_block",
+      "Deceased Name": "will_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "paragraph1_block",
+      "Deceased Property Address": "decedent_block_pg1_zip_upgrade",
+      "Relationship": "distributee_class_child",
+      "Property Value": "personal_property"
+    }
+  },
+  {
+    "file": "2026-19_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.588,
+    "matched_markers": [
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "attorney_phone_candidates": "page6_block",
+      "Phone Number": "attorney_block_pg6",
+      "attorney_email_candidates": "page6_block",
+      "Email Address": "attorney_block_pg6",
+      "Attorney": "attorney_block_pg6",
+      "attorney_name_candidates": "page6_block",
+      "Deceased Name": "will_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "paragraph1_block",
+      "Deceased Property Address": "domicile_section_pg2",
+      "Relationship": "table_petitioner_pg3",
+      "Property Value": "fallback_rescan"
+    }
+  },
+  {
+    "file": "2026-20_ADMINISTRATION PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_ADMIN",
+    "confidence_score": 1.0,
+    "matched_markers": [
+      "petition for letters of",
+      "administration proceeding"
+    ],
+    "missing_fields": [
+      "Email Address"
+    ],
+    "error": "",
+    "pages_used": 5,
+    "field_sources": {
+      "Deceased Name": "estate_of_text",
+      "Petitioner Name": "petitioner_scope_pg1",
+      "Relationship": "petitioner_interest_pg1",
+      "Deceased Property Address": "decedent_info_lines",
+      "Petitioner Address": "petitioner_domicile_block",
+      "Property Value": "personal_real_property",
+      "Attorney": "esq_line_last_page",
+      "Phone Number": "last_page_phone"
+    }
+  },
+  {
+    "file": "2026-21_ADMINISTRATION PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_ADMIN",
+    "confidence_score": 1.0,
+    "matched_markers": [
+      "petition for letters of",
+      "administration proceeding"
+    ],
+    "missing_fields": [
+      "Email Address"
+    ],
+    "error": "",
+    "pages_used": 5,
+    "field_sources": {
+      "Deceased Name": "estate_of_pg1",
+      "Petitioner Name": "petitioner_scope_pg1",
+      "Relationship": "petitioner_interest_scan",
+      "Deceased Property Address": "decedent_info_lines",
+      "Petitioner Address": "petitioner_domicile_block",
+      "Property Value": "personal_real_property",
+      "Attorney": "esq_line_last_page",
+      "Phone Number": "last_page_phone"
+    }
+  },
+  {
+    "file": "2026-8_ADMINISTRATION PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_ADMIN",
+    "confidence_score": 1.0,
+    "matched_markers": [
+      "petition for letters of",
+      "administration proceeding"
+    ],
+    "missing_fields": [],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "Deceased Name": "estate_of_text",
+      "Petitioner Name": "petitioner_block_scan",
+      "Relationship": "petitioner_interest_pg1",
+      "Deceased Property Address": "decedent_block_pg2",
+      "Petitioner Address": "my_domicile_pg6",
+      "Property Value": "fallback_rescan",
+      "Attorney": "print_name_of_attorney",
+      "Phone Number": "last_page_phone",
+      "Email Address": "last_page_email"
+    }
+  },
+  {
+    "file": "2026-9_PROBATE PETITION.pdf",
+    "case_id": 1,
+    "extraction_method": "OCR_FALLBACK",
+    "form_type": "FORM_A",
+    "confidence_score": 0.706,
+    "matched_markers": [
+      "surrogate's court",
+      "file no.",
+      "state of new york",
+      "county of richmond",
+      "staten island",
+      "domicile",
+      "improved real property"
+    ],
+    "missing_fields": [
+      "Email Address"
+    ],
+    "error": "",
+    "pages_used": 6,
+    "field_sources": {
+      "attorney_phone_candidates": "page1_block",
+      "Phone Number": "attorney_block_pg1",
+      "Attorney": "attorney_block_pg6",
+      "attorney_name_candidates": "page6_block",
+      "Deceased Name": "estate_of_pg1",
+      "Petitioner Name": "petitioner_section_pg1",
+      "Petitioner Address": "domicile_block_pg1_lines",
+      "Deceased Property Address": "domicile_section_pg2",
+      "Relationship": "distributee_class_child",
+      "Property Value": "improved_real_property"
+    }
+  }
+]

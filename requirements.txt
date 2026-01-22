@@ -1,0 +1,8 @@
+gspread
+google-auth
+google-auth-oauthlib
+pymupdf
+pytesseract
+Pillow
+opencv-python
+pandas

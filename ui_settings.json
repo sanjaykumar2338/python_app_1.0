@@ -1,0 +1,10 @@
+{
+  "pdf_dir": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app/finalAttached",
+  "sheet_link": "https://docs.google.com/spreadsheets/d/1goCVoKstg2AwZ4aciEZLAEkI2oHi2qrOazzQFx-FkR8/edit?gid=0#gid=0",
+  "worksheet": "Probate Information",
+  "out_csv": "output.csv",
+  "append": true,
+  "mode": "none",
+  "creds": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app/famous-athlete-464607-d3-629a8ed33609.json",
+  "creds_prev": ""
+}
