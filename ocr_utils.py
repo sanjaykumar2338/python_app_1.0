@@ -49,17 +49,24 @@ def _ocr_page(page, pdf_path: str, page_idx: int, dpi: int, cancel_event: Option
 
 def extract_pdf_text(
     pdf_path: str,
-    min_text_length: int = 200,
+    min_text_length: int = 80,
     ocr_dpi: int = 300,
     cancel_event: Optional["threading.Event"] = None,
 ) -> Tuple[str, str, List[str]]:
     global _last_info
+    env_min_text = os.getenv("MIN_TEXT_LEN")
+    if env_min_text and env_min_text.isdigit():
+        min_text_length = int(env_min_text)
+    prefer_text_layer = os.getenv("PREFER_TEXT_LAYER", "0") == "1"
     doc = fitz.open(pdf_path)
     try:
         page_texts = [doc[i].get_text("text") for i in range(len(doc))]
         total_text = " ".join(page_texts)
+        total_len = len(_simple_normalize(total_text))
 
-        if len(_simple_normalize(total_text)) < min_text_length:
+        use_full_ocr = (total_len < min_text_length) and (not prefer_text_layer)
+
+        if use_full_ocr:
             texts = [_ocr_page(doc[i], pdf_path, i, ocr_dpi, cancel_event) for i in range(len(doc))]
             method = "OCR_FALLBACK"
         else:
@@ -83,7 +90,10 @@ def extract_pdf_text(
         "render_dpi": ocr_dpi,
         "renderer": f"pymupdf {fitz.__doc__[:5] if hasattr(fitz,'__doc__') else ''}".strip(),
         "pages": len(texts),
+        "text_len": total_len,
     }
+    if os.getenv("DEBUG_EXTRACT") == "1":
+        print(f"[EXTRACT_INFO] {_last_info}")
     return "\n".join(texts), method, texts
 
 

@@ -5,7 +5,9 @@
       "python_version": "3.10.19",
       "platform": "macOS-26.2-arm64-arm-64bit",
       "exe_mode": "script",
-      "cwd": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app"
+      "cwd": "/Applications/XAMPP/xamppfiles/htdocs/myworkplace/fiverr/moishiefriedman/python app",
+      "fs_encoding": "utf-8",
+      "preferred_encoding": "UTF-8"
     },
     "deps": {
       "fitz": "1.26.7",
@@ -28,6 +30,13 @@
     "file": "2025-1166___PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2025-1166___PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 4
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
     "matched_markers": [
@@ -60,6 +69,13 @@
     "file": "2025-1461_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2025-1461_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
     "matched_markers": [
@@ -93,6 +109,13 @@
     "file": "2025-1463_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2025-1463_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
     "matched_markers": [
@@ -124,6 +147,13 @@
     "file": "2026-10_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-10_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 7
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
     "matched_markers": [
@@ -157,6 +187,13 @@
     "file": "2026-11_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-11_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
     "matched_markers": [
@@ -189,6 +226,13 @@
     "file": "2026-13_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-13_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 5
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
     "matched_markers": [
@@ -221,6 +265,13 @@
     "file": "2026-14_ADMINISTRATION PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-14_ADMINISTRATION PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 4
+    },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
     "matched_markers": [
@@ -246,6 +297,13 @@
     "file": "2026-16_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-16_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 5
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
     "matched_markers": [
@@ -278,6 +336,13 @@
     "file": "2026-19_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-19_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.588,
     "matched_markers": [
@@ -310,6 +375,13 @@
     "file": "2026-20_ADMINISTRATION PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-20_ADMINISTRATION PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 5
+    },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
     "matched_markers": [
@@ -336,6 +408,13 @@
     "file": "2026-21_ADMINISTRATION PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-21_ADMINISTRATION PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 5
+    },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
     "matched_markers": [
@@ -362,6 +441,13 @@
     "file": "2026-8_ADMINISTRATION PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-8_ADMINISTRATION PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_ADMIN",
     "confidence_score": 1.0,
     "matched_markers": [
@@ -387,6 +473,13 @@
     "file": "2026-9_PROBATE PETITION.pdf",
     "case_id": 1,
     "extraction_method": "OCR_FALLBACK",
+    "extraction_info": {
+      "pdf": "2026-9_PROBATE PETITION.pdf",
+      "extraction_mode": "OCR_FALLBACK",
+      "render_dpi": 300,
+      "renderer": "pymupdf PyMuP",
+      "pages": 6
+    },
     "form_type": "FORM_A",
     "confidence_score": 0.706,
     "matched_markers": [

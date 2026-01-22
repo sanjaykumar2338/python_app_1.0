@@ -457,8 +457,8 @@ def clean_record(rec: Dict[str, str], pages_text: Optional[List[str]] = None) ->
     return out
 
 
-EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE)
-PHONE_RE = re.compile(r"(\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})")
+EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", re.IGNORECASE)
+PHONE_RE = re.compile(r"(\+?1)?\D*(\d{3})\D*(\d{3})\D*(\d{4})")
 CONTROL_RE = re.compile(r"[\x00-\x1F\x7F]")
 ZERO_WIDTH_RE = re.compile(r"[\u200B-\u200D\uFEFF]")
 
@@ -466,22 +466,36 @@ ZERO_WIDTH_RE = re.compile(r"[\u200B-\u200D\uFEFF]")
 def extract_first_email(text: str) -> str:
     if not text:
         return ""
-    m = EMAIL_RE.search(text)
-    return m.group(0).lower() if m else ""
+    for m in EMAIL_RE.finditer(text):
+        cand = m.group(0).strip(".,;:)]}")
+        cand = cand.lower()
+        if " " in cand:
+            continue
+        if len(cand) > 80:
+            continue
+        return cand
+    return ""
 
 
 def extract_first_phone(text: str) -> str:
     if not text:
         return ""
-    m = PHONE_RE.search(text)
-    if not m:
+    norm = text.replace("O", "0").replace("o", "0")
+    keyword_positions = [m.start() for kw in ("phone", "tel", "telephone") for m in re.finditer(kw, norm.lower())]
+    candidates = []
+    for m in PHONE_RE.finditer(norm):
+        g2, g3, g4 = m.group(2), m.group(3), m.group(4)
+        if not (g2 and g3 and g4):
+            continue
+        digits = f"{g2}{g3}{g4}"
+        phone = f"{g2}-{g3}-{g4}"
+        start = m.start()
+        dist = min((abs(start - kp) for kp in keyword_positions), default=start)
+        candidates.append((dist, start, phone, digits))
+    if not candidates:
         return ""
-    digits = re.sub(r"\D", "", m.group(1))
-    if len(digits) == 11 and digits.startswith("1"):
-        digits = digits[1:]
-    if len(digits) != 10:
-        return ""
-    return f"{digits[:3]}-{digits[3:6]}-{digits[6:]}"
+    candidates.sort(key=lambda t: (t[0], t[1]))
+    return candidates[0][2]
 
 
 def _fallback_petitioner_from_blocks(text: str) -> str:
@@ -507,7 +521,7 @@ def _phone_near_attorney(text: str, attorney: str) -> str:
     name_pos = low_text.find(attorney.lower())
     candidates = []
     for m in PHONE_RE.finditer(text):
-        phone = extract_first_phone(m.group(1))
+        phone = extract_first_phone(m.group(0))
         if not phone:
             continue
         dist = abs(m.start() - name_pos) if name_pos != -1 else m.start()
@@ -545,7 +559,7 @@ def normalize_row(fields: Dict[str, str], full_text: str, pdf_name: str, debug=N
         elif debug is not None:
             debug.setdefault("_warnings", []).append(f"VALIDATION_FAIL:{pdf_name}:Petitioner Name empty")
     if not cleaned.get("Relationship"):
-        cleaned["Relationship"] = "Other"
+        cleaned["Relationship"] = "Unknown"
     return cleaned
 
 
@@ -675,6 +689,14 @@ def parse_fields(raw_text: str, pages_text: Optional[List[str]] = None, debug: O
             debug.setdefault("Relationship", []).append(
                 {"source": "RELATIONSHIP_REQUIRED_ENFORCEMENT", "value": "Unknown", "score": 1, "status": "OK", "reason": "fallback_required"}
             )
+    if fields.get("Relationship") and not fields.get("Petitioner Name"):
+        fallback_pet = _fallback_petitioner_from_blocks(text)
+        if fallback_pet:
+            fields["Petitioner Name"] = fallback_pet
+            if debug is not None:
+                debug.setdefault("Petitioner Name", []).append(
+                    {"source": "fallback_relationship_guard", "value": fallback_pet, "score": 95, "status": "OK"}
+                )
     # Validation gates
     email_val = fields.get("Email Address", "")
     email_match = re.search(r"([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})", email_val or "", re.IGNORECASE)

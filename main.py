@@ -6,7 +6,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Callable, Dict, List, Optional
 
-import pandas as pd
+import csv
 import pytesseract
 
 from extractor import Columns, parse_fields, normalize_row, sanitize_row
@@ -160,9 +160,11 @@ def _timestamped_out_path(path: str) -> str:
     return f"{base}_{month}_{year}_{time_part}{ext}"
 
 
-def write_csv(rows: List[List[str]], out_csv: str):
-    df = pd.DataFrame(rows, columns=Columns)
-    df.to_csv(out_csv, index=False)
+def write_csv(rows: List[List[str]], out_csv: str, columns: List[str]):
+    with open(out_csv, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.writer(f, lineterminator="\n")
+        writer.writerow(columns)
+        writer.writerows(rows)
 
 
 def write_log(log_entries: List[dict], log_path: str):
@@ -205,6 +207,11 @@ def run_batch(
             f"fitz={deps.get('fitz')} pdfplumber={deps.get('pdfplumber')} pytesseract={deps.get('pytesseract')}"
         )
     rows: List[List[str]] = []
+    debug_csv = os.getenv("DEBUG_EXTRACT", "0") == "1"
+    columns_out = list(Columns)
+    if debug_csv:
+        columns_out += ["extraction_mode", "text_len", "pdf_name"]
+
     stats = {
         "total": len(pdf_paths),
         "processed": 0,
@@ -287,7 +294,15 @@ def run_batch(
                 log_entry["form_type"] = detection.get("form_type", "UNKNOWN")
                 log_entry["confidence_score"] = detection.get("confidence_score", 0)
                 log_entry["matched_markers"] = detection.get("matched_markers", [])
-                rows.append(result["row"])
+                row_out = list(result["row"])
+                if debug_csv:
+                    info = result.get("extraction_info", {}) or {}
+                    row_out += [
+                        info.get("extraction_mode", result.get("method", "")),
+                        info.get("text_len", None),
+                        file_name,
+                    ]
+                rows.append(row_out)
                 stats["success"] += 1
                 if result["method"] in ("OCR", "MIXED"):
                     stats["ocr"] += 1
@@ -327,7 +342,7 @@ def run_batch(
         report_progress()
 
     # Always write CSV so headers exist even if cancelled/failed.
-    write_csv(rows, out_csv_final)
+    write_csv(rows, out_csv_final, columns_out)
     log_path = settings.get("log_path") or "run_log.json"
     write_log(log_entries, log_path)
 
