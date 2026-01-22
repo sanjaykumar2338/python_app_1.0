@@ -459,6 +459,8 @@ def clean_record(rec: Dict[str, str], pages_text: Optional[List[str]] = None) ->
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE)
 PHONE_RE = re.compile(r"(\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})")
+CONTROL_RE = re.compile(r"[\x00-\x1F\x7F]")
+ZERO_WIDTH_RE = re.compile(r"[\u200B-\u200D\uFEFF]")
 
 
 def extract_first_email(text: str) -> str:
@@ -520,7 +522,9 @@ def normalize_row(fields: Dict[str, str], full_text: str, pdf_name: str, debug=N
     cleaned = {}
     for k, v in fields.items():
         if isinstance(v, str):
-            v = re.sub(r"[^\x09\x0A\x0D\x20-\x7E]", " ", v)
+            v = v.replace("\u00A0", " ")
+            v = ZERO_WIDTH_RE.sub(" ", v)
+            v = CONTROL_RE.sub(" ", v)
             v = re.sub(r"\s+", " ", v).strip()
         cleaned[k] = v
     raw_email = cleaned.get("Email Address", "")
@@ -543,6 +547,21 @@ def normalize_row(fields: Dict[str, str], full_text: str, pdf_name: str, debug=N
     if not cleaned.get("Relationship"):
         cleaned["Relationship"] = "Other"
     return cleaned
+
+
+def sanitize_row(fields: Dict[str, str]) -> Dict[str, str]:
+    """Final guard before CSV write: strip controls, collapse spaces, hard-trim email/phone."""
+    sanitized: Dict[str, str] = {}
+    for k, v in fields.items():
+        if isinstance(v, str):
+            v = v.replace("\u00A0", " ")
+            v = ZERO_WIDTH_RE.sub(" ", v)
+            v = CONTROL_RE.sub(" ", v)
+            v = re.sub(r"\s+", " ", v).strip()
+        sanitized[k] = v
+    sanitized["Email Address"] = extract_first_email(sanitized.get("Email Address", ""))
+    sanitized["Phone Number"] = extract_first_phone(sanitized.get("Phone Number", ""))
+    return sanitized
 
 
 def _clean_output_value(val: str) -> str:

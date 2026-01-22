@@ -9,7 +9,7 @@ from typing import Callable, Dict, List, Optional
 import pandas as pd
 import pytesseract
 
-from extractor import Columns, parse_fields, normalize_row
+from extractor import Columns, parse_fields, normalize_row, sanitize_row
 from ocr_utils import ExtractionCancelled, extract_pdf_text, get_last_extraction_info
 from form_detector import FormType
 from diagnostics import log_environment
@@ -79,6 +79,8 @@ def process_pdf(pdf_path: str, min_text_length: int, ocr_dpi: int, cancel_event=
         fields, missing, detection = parse_fields(seg_text, pages_text=seg, debug=debug_data, form_hint=form_hint)
         # Final normalization layer for EXE/script parity
         fields = normalize_row(fields, seg_text, pdf_filename, debug_data)
+        # Final sanitize guard before CSV write
+        fields = sanitize_row(fields)
         missing = [col for col in Columns if not fields.get(col)]
         if debug_data is not None:
             debug_data["_final_normalized"] = fields
